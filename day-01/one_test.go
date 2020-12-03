@@ -1,7 +1,6 @@
 package one
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -213,7 +212,7 @@ func TestProductOfTwo(t *testing.T) {
 
 	if dayOneSolution, err := productOfTwo(dayOneInput, 2020); err == nil {
 		if dayOneSolution != expectedSolution {
-			fmt.Printf("Expected to get %d but got %d\n", expectedSolution, dayOneSolution)
+			t.Fatalf("Expected to get %d but got %d\n", expectedSolution, dayOneSolution)
 		}
 	} else {
 		t.Fatalf("No solution found for day 01 input")
@@ -225,9 +224,9 @@ func TestProductOfThree(t *testing.T) {
 
 	if dayOneSolution, err := productOfThree(dayOneInput, 2020); err == nil {
 		if dayOneSolution != expectedSolution {
-			fmt.Printf("Expected to get %d but got %d\n", expectedSolution, dayOneSolution)
+			t.Fatalf("Expected to get %d but got %d\n", expectedSolution, dayOneSolution)
 		}
 	} else {
-		fmt.Println("No solution found for day 01 input")
+		t.Fatalf("No solution found for day 01 input")
 	}
 }
