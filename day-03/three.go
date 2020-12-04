@@ -9,7 +9,7 @@ type MovementPattern struct {
 	Down  int
 }
 
-func countTreesPartOne(input string, movementPattern MovementPattern) int {
+func countTrees(input string, movementPattern MovementPattern) int {
 	columnIndex := 0
 	treesEncountered := 0
 	rows := strings.Split(input, "\n")

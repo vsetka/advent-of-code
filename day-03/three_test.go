@@ -342,7 +342,7 @@ var advancedInput = `.............#...#....#.....##.
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := 7
-	foundSolution := countTreesPartOne(basicInput, MovementPattern{Right: 3, Down: 1})
+	foundSolution := countTrees(basicInput, MovementPattern{Right: 3, Down: 1})
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -351,7 +351,7 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 167
-	foundSolution := countTreesPartOne(advancedInput, MovementPattern{Right: 3, Down: 1})
+	foundSolution := countTrees(advancedInput, MovementPattern{Right: 3, Down: 1})
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -370,7 +370,7 @@ func TestBaseCasePartTwo(t *testing.T) {
 	}
 
 	for _, pattern := range movementPatterns {
-		foundSolution *= countTreesPartOne(basicInput, pattern)
+		foundSolution *= countTrees(basicInput, pattern)
 	}
 
 	if foundSolution != expectedSolution {
@@ -379,7 +379,7 @@ func TestBaseCasePartTwo(t *testing.T) {
 }
 
 func TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 7
+	expectedSolution := 736527114
 	foundSolution := 1
 	movementPatterns := []MovementPattern{
 		MovementPattern{Right: 1, Down: 1},
@@ -390,7 +390,7 @@ func TestAdvancedCasePartTwo(t *testing.T) {
 	}
 
 	for _, pattern := range movementPatterns {
-		foundSolution *= countTreesPartOne(advancedInput, pattern)
+		foundSolution *= countTrees(advancedInput, pattern)
 	}
 
 	if foundSolution != expectedSolution {
