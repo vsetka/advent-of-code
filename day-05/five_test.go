@@ -1,16 +1,15 @@
 package five
 
 import (
-	"strings"
 	"testing"
 )
 
-var basicInputPartOne = `FBFBBFFRLR
+var basicInput = `FBFBBFFRLR
 BFFFBBFRRR
 FFFBBBFRRR
 BBFFBBFRLL`
 
-var advancedInputPartOne = `FFBBFFFLRL
+var advancedInput = `FFBBFFFLRL
 FFBBFBBRRL
 FBBBFFBLRL
 BBFBFFBLRR
@@ -945,14 +944,7 @@ BFBFFFFLLL`
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := 820
-	foundSolution := 0
-
-	for _, seat := range strings.Split(basicInputPartOne, "\n") {
-		seatID := getSeatIDPartOne(seat)
-		if seatID > foundSolution {
-			foundSolution = seatID
-		}
-	}
+	foundSolution := getLargestSeatID(basicInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -961,14 +953,16 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 947
-	foundSolution := 0
+	foundSolution := getLargestSeatID(advancedInput)
 
-	for _, seat := range strings.Split(advancedInputPartOne, "\n") {
-		seatID := getSeatIDPartOne(seat)
-		if seatID > foundSolution {
-			foundSolution = seatID
-		}
+	if foundSolution != expectedSolution {
+		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
 	}
+}
+
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 636
+	foundSolution := getMySeat(advancedInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)

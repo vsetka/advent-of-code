@@ -1,5 +1,10 @@
 package five
 
+import (
+	"sort"
+	"strings"
+)
+
 /**
 Search example for input -> F B F B B F F
 
@@ -30,9 +35,46 @@ func bSearch(input string, left rune, right rune) int {
 	return upperBound
 }
 
-func getSeatIDPartOne(input string) int {
+func getSeatID(input string) int {
 	row := bSearch(input[:len(input)-3], 'F', 'B')
 	column := bSearch(input[len(input)-3:], 'L', 'R')
 
 	return row*8 + column
+}
+
+func getLargestSeatID(input string) int {
+	foundSolution := 0
+
+	for _, seat := range strings.Split(input, "\n") {
+		seatID := getSeatID(seat)
+		if seatID > foundSolution {
+			foundSolution = seatID
+		}
+	}
+
+	return foundSolution
+}
+
+func getMySeat(input string) int {
+	seats := strings.Split(input, "\n")
+	seatIDs := make([]int, len(seats))
+
+	for idx, seat := range seats {
+		seatIDs[idx] = getSeatID(seat)
+	}
+
+	sort.Ints(seatIDs)
+	middle := len(seatIDs) / 2
+	startOffset := seatIDs[0]
+
+	for idx := 0; idx < middle; idx++ {
+		if seatIDs[middle+idx] != startOffset+middle+idx {
+			return startOffset + middle + idx
+		}
+		if seatIDs[middle-idx-1] != startOffset+middle-idx-1 {
+			return startOffset + middle - idx
+		}
+	}
+
+	return 0
 }
