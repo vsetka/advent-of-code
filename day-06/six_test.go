@@ -2155,7 +2155,7 @@ fbmtw`
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := 11
-	foundSolution := getAnswerCount(basicInput)
+	foundSolution := getAnswerCountPartOne(basicInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -2164,7 +2164,25 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 6521
-	foundSolution := getAnswerCount(advancedInput)
+	foundSolution := getAnswerCountPartOne(advancedInput)
+
+	if foundSolution != expectedSolution {
+		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
+	}
+}
+
+func TestBaseCasePartTwo(t *testing.T) {
+	expectedSolution := 6
+	foundSolution := getAnswerCountPartTwo(basicInput)
+
+	if foundSolution != expectedSolution {
+		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
+	}
+}
+
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 3305
+	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
