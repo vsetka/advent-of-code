@@ -9,7 +9,6 @@ import (
 
 /**
 Search example for input -> F B F B B F F
-NOTE: we care about the upper bound only
 
 127			0000000 - 1111111 0 - 127
 64		F	0000000 - 0111111 0 - 63		clear bit on 0
@@ -18,22 +17,19 @@ NOTE: we care about the upper bound only
 8			B 0101000 - 0101111 40 - 47		no clear
 4			B 0101100 - 0101111 44 - 47		no clear
 2			F 0101100 - 0101101 44 - 45		clear bit on 5
-1			F 0101100 44
-*/
+1			F 0101100 44 (basically our input, FBFBBFF if F is 0 and B is 1)
 
+Turns out the input pattern describing the seat position in 2D space by doing binary
+search with back/front + left/right instructions is just an obfuscated binary representation
+of the seat ID. Each letter encodes either 1 or 0. The clue was in the the number of rows and seats
+as well as the final encoding of the seat ID by multiplying rows by 8 and adding columns (ie -> (row << 3) | column).
+*/
 func getSeatID(input string) int {
-	// In order to get the seat ID, we need to look at our input in binary
-	// representation where F/L are 1s and B/R are 0s
-	input = regexp.MustCompile(`F|L`).ReplaceAllString(input, "1")
-	input = regexp.MustCompile(`B|R`).ReplaceAllString(input, "0")
+	input = regexp.MustCompile(`F|L`).ReplaceAllString(input, "0")
+	input = regexp.MustCompile(`B|R`).ReplaceAllString(input, "1")
 	binaryInput, _ := strconv.ParseInt(input, 2, 16)
 
-	// Once we have converted the search input into its binary representation
-	// we can just flip the bits against the same size binary number with all bits set to 1
-	// We can do this all in one go as this is equivalent to calculating rows and columns separately
-	// and merging them effectively into one number by multiplying rows by 8 and adding to columns
-	// which is the same as shifting the rows left by 3 and merging with columns, ie (row << 3) | column
-	return int(binaryInput ^ ((1 << len(input)) - 1))
+	return int(binaryInput)
 }
 
 func getLargestSeatID(input string) int {
