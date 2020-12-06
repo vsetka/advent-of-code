@@ -1,7 +1,9 @@
 package five
 
 import (
+	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -19,25 +21,19 @@ NOTE: we care about the upper bound only
 1			F 0101100 44
 */
 
-func bSearch(input string, flipper rune) int {
-	// Start with length of input number of 1 bits (1111111 - 127)
-	result := (1 << len(input)) - 1
-
-	for idx, splitDirection := range input {
-		// We only clear on "halving" directions F / L
-		if splitDirection == flipper {
-			result ^= 1 << (len(input) - (idx + 1))
-		}
-	}
-
-	return result
-}
-
 func getSeatID(input string) int {
-	row := bSearch(input[:len(input)-3], 'F')
-	column := bSearch(input[len(input)-3:], 'L')
+	// In order to get the seat ID, we need to look at our input in binary
+	// representation where F/L are 1s and B/R are 0s
+	input = regexp.MustCompile(`F|L`).ReplaceAllString(input, "1")
+	input = regexp.MustCompile(`B|R`).ReplaceAllString(input, "0")
+	binaryInput, _ := strconv.ParseInt(input, 2, 16)
 
-	return row*8 + column
+	// Once we have converted the search input into its binary representation
+	// we can just flip the bits against the same size binary number with all bits set to 1
+	// We can do this all in one go as this is equivalent to calculating rows and columns separately
+	// and merging them effectively into one number by multiplying rows by 8 and adding to columns
+	// which is the same as shifting the rows left by 3 and merging with columns, ie (row << 3) | column
+	return int(binaryInput ^ ((1 << len(input)) - 1))
 }
 
 func getLargestSeatID(input string) int {
@@ -70,7 +66,7 @@ func getMySeat(input string) int {
 			return startOffset + middle + idx
 		}
 		if seatIDs[middle-idx-1] != startOffset+middle-idx-1 {
-			return startOffset + middle - idx
+			return startOffset + middle - idx - 1
 		}
 	}
 
