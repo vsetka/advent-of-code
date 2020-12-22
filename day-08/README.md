@@ -45,3 +45,72 @@ This is an **`infinite loop`**: with this sequence of jumps, the program will ru
 Immediately **`before`** the program would run an instruction a second time, the value in the accumulator is **`5`**.
 
 Run your copy of the boot code. Immediately before any instruction is executed a second time, **`what value is in the accumulator?`**
+
+# Part Two
+
+After some careful analysis, you believe that **`exactly one instruction is corrupted`**.
+
+Somewhere in the program, **`either`** a `jmp` is supposed to be a `nop`, **`or`** a `nop` is supposed to be a `jmp`. (No `acc` instructions were harmed in the corruption of this boot code.)
+
+The program is supposed to terminate by **`attempting to execute an instruction immediately after the last instruction in the file`**. By changing exactly one `jmp` or `nop`, you can repair the boot code and make it terminate correctly.
+
+For example, consider the same program from above:
+```
+nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6
+```
+
+If you change the first instruction from `nop +0` to `jmp +0`, it would create a single-instruction infinite loop, never leaving that instruction. If you change almost any of the `jmp` instructions, the program will still eventually find another `jmp` instruction and loop forever.
+
+However, if you change the second-to-last instruction (from `jmp -4` to `nop -4`), the program terminates! The instructions are visited in this order:
+```
+nop +0  | 1
+acc +1  | 2
+jmp +4  | 3
+acc +3  |
+jmp -3  |
+acc -99 |
+acc +1  | 4
+nop -4  | 5
+acc +6  | 6
+```
+
+After the last instruction (`acc +6`), the program terminates by attempting to run the instruction below the last instruction in the file. With this change, after the program terminates, the accumulator contains the value **`8`** (`acc +1`, `acc +1`, `acc +6`).
+
+Fix the program so that it terminates normally by changing exactly one `jmp` (to `nop`) or `nop` (to `jmp`). **`What is the value of the accumulator after the program terminates?`**
+
+<details>
+  <summary>Solution notes</summary>
+
+# Solution notes
+
+I wanted to solve part two without brute force, which would involve replacing `jmp`s with `nop`s and re-runing the entire boot code to find the problematic `jmp`. Instead, I generate the **execution graph** and identify the cut-off section of the graph, starting from the last instruction, traversing the parents. Then I start traversing up from the leaf nodes until I find a `jmp` instruction, which gets replaced with a `nop` and bootcode gets re-run. This enables us to find the bad `jmp` quicker than just relying on dumb brute force.
+
+The execution graphs are dumped for visualization in graphviz. Following is the digraph of the basic input:
+```
+digraph G {
+  start -> nop_0;
+  nop_0 -> acc_1;
+  acc_1 -> jmp_2_to_6;
+  jmp_2_to_6 -> acc_6;
+  acc_3 -> jmp_4_to_1;
+  jmp_4_to_1 -> acc_1;
+  acc_5 -> acc_6;
+  acc_6 -> jmp_7_to_3;
+  jmp_7_to_3 -> acc_3;
+  acc_8 -> end;
+}
+```
+<img src="graphviz_basic.svg">
+
+Advanced input execution graph:
+<img src="graphviz_advanced.svg">
+
+</details>

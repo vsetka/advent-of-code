@@ -650,7 +650,7 @@ jmp +1`
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := 5
-	foundSolution := GetAnswerCountPartOne(basicInput)
+	foundSolution := getAnswerCountPartOne(basicInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -659,15 +659,15 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 1614
-	foundSolution := GetAnswerCountPartOne(advancedInput)
+	foundSolution := getAnswerCountPartOne(advancedInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
 	}
 }
 
-func _TestBaseCasePartTwo(t *testing.T) {
-	expectedSolution := 32
+func TestBaseCasePartTwo(t *testing.T) {
+	expectedSolution := 8
 	foundSolution := getAnswerCountPartTwo(basicInput)
 
 	if foundSolution != expectedSolution {
@@ -675,8 +675,8 @@ func _TestBaseCasePartTwo(t *testing.T) {
 	}
 }
 
-func _TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 39645
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 1260
 	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {
