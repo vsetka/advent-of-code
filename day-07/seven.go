@@ -22,7 +22,6 @@ func getCapacityMap(input string) map[string][]capacity {
 		for _, match := range fieldMatches {
 			rootBag := match[1]
 			rest := match[2]
-			// fmt.Printf("rootBag: %s\n", rootBag)
 
 			if rest != "no other bags" {
 				restMatches := childMatcher.FindAllStringSubmatch(rest, -1)
@@ -30,7 +29,6 @@ func getCapacityMap(input string) map[string][]capacity {
 					quantity, _ := strconv.Atoi(childMatch[1])
 					childBag := childMatch[2]
 					capacities[rootBag] = append(capacities[rootBag], capacity{quantity: quantity, bag: childBag})
-					// fmt.Printf("childMatch: %d %s\n", quantity, childBag)
 				}
 			}
 		}
@@ -84,17 +82,26 @@ func getHolders(bag string, capacitiesMap map[string][]capacity) []string {
 	return additionalCandidates
 }
 
-// GetAnswerCountPartOne asd
-func GetAnswerCountPartOne(input string) int {
-	capacities := getCapacityMap(input)
-	holders := []string{}
+func getTotalCapacity(bag string, capacitiesMap map[string][]capacity) int {
+	if capacityInfo, ok := capacitiesMap[bag]; ok {
+		total := 0
 
-	candidates := make([]string, 0, len(capacities))
-	for k := range capacities {
-		candidates = append(candidates, k)
+		for _, c := range capacityInfo {
+			total += c.quantity + c.quantity*getTotalCapacity(c.bag, capacitiesMap)
+		}
+
+		return total
 	}
 
-	holders = distinct(getHolders("shiny gold", capacities))
+	return 0
+}
 
-	return len(holders)
+func getAnswerCountPartOne(input string) int {
+	capacities := getCapacityMap(input)
+	return len(distinct(getHolders("shiny gold", capacities)))
+}
+
+func getAnswerCountPartTwo(input string) int {
+	capacities := getCapacityMap(input)
+	return getTotalCapacity("shiny gold", capacities)
 }

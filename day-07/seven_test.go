@@ -14,6 +14,14 @@ vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
 faded blue bags contain no other bags.
 dotted black bags contain no other bags.`
 
+var basicInputPartTwo = `shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.`
+
 var advancedInput = `posh crimson bags contain 2 mirrored tan bags, 1 faded red bag, 1 striped gray bag.
 bright gray bags contain 1 striped white bag, 4 vibrant cyan bags, 4 clear white bags, 4 muted gold bags.
 pale plum bags contain 1 dark silver bag.
@@ -611,7 +619,7 @@ dotted silver bags contain 1 muted blue bag, 3 shiny teal bags, 2 plaid coral ba
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := 4
-	foundSolution := GetAnswerCountPartOne(basicInput)
+	foundSolution := getAnswerCountPartOne(basicInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -620,27 +628,27 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 172
-	foundSolution := GetAnswerCountPartOne(advancedInput)
+	foundSolution := getAnswerCountPartOne(advancedInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
 	}
 }
 
-// func TestBaseCasePartTwo(t *testing.T) {
-// 	expectedSolution := 6
-// 	foundSolution := getAnswerCountPartTwo(basicInput)
+func TestBaseCasePartTwo(t *testing.T) {
+	expectedSolution := 32 + 126
+	foundSolution := getAnswerCountPartTwo(basicInput) + getAnswerCountPartTwo(basicInputPartTwo)
 
-// 	if foundSolution != expectedSolution {
-// 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
-// 	}
-// }
+	if foundSolution != expectedSolution {
+		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
+	}
+}
 
-// func TestAdvancedCasePartTwo(t *testing.T) {
-// 	expectedSolution := 3305
-// 	foundSolution := getAnswerCountPartTwo(advancedInput)
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 39645
+	foundSolution := getAnswerCountPartTwo(advancedInput)
 
-// 	if foundSolution != expectedSolution {
-// 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
-// 	}
-// }
+	if foundSolution != expectedSolution {
+		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
+	}
+}
