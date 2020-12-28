@@ -2,6 +2,7 @@ package nine
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -55,6 +56,25 @@ func getAnswerCountPartOne(input string, preambleSize int) int {
 	return answer
 }
 
-func getAnswerCountPartTwo(input string) int {
+func getAnswerCountPartTwo(input string, target int) int {
+	data := parse(input)
+
+	for idx := range data {
+		sum := 0
+		for subIdx, subItem := range data[idx:] {
+			sum += subItem
+			if sum == target {
+				targetSumSlice := data[idx : idx+subIdx+1]
+				sort.Slice(targetSumSlice, func(a int, b int) bool {
+					return targetSumSlice[a] < targetSumSlice[b]
+				})
+				return targetSumSlice[0] + targetSumSlice[len(targetSumSlice)-1]
+			}
+			if sum > target {
+				break
+			}
+		}
+	}
+
 	return 0
 }
