@@ -169,18 +169,18 @@ func TestAdvancedCasePartOne(t *testing.T) {
 	}
 }
 
-func _TestBaseCasePartTwo(t *testing.T) {
-	expectedSolution := 62
-	foundSolution := getAnswerCountPartTwo(firstBasicInput, 127)
+func TestBaseCasePartTwo(t *testing.T) {
+	expectedSolution := 8 + 19208
+	foundSolution := getAnswerCountPartTwo(firstBasicInput) + getAnswerCountPartTwo(secondBasicInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
 	}
 }
 
-func _TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 209694133
-	foundSolution := getAnswerCountPartTwo(advancedInput, 1721308972)
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 173625106649344
+	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)

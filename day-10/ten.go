@@ -22,15 +22,15 @@ func parse(input string) []int {
 func getAnswerCountPartOne(input string) int {
 	data := parse(input)
 	differenceCounts := map[int]int{}
-	base := 0 // outlet is 0, so we start with 0
+	baseJoltage := 0 // outlet is 0, so we start with 0
 
 	sort.Slice(data, func(a int, b int) bool {
 		return data[a] < data[b]
 	})
 
-	for _, item := range data {
-		differenceCounts[item-base]++
-		base = item
+	for _, adapterJoltage := range data {
+		differenceCounts[adapterJoltage-baseJoltage]++
+		baseJoltage = adapterJoltage
 	}
 
 	differenceCounts[3]++ // accounts for our device
@@ -38,9 +38,21 @@ func getAnswerCountPartOne(input string) int {
 	return differenceCounts[1] * differenceCounts[3]
 }
 
-func getAnswerCountPartTwo(input string, target int) int {
-	// data := parse(input)
-	answer := 0
+func getAnswerCountPartTwo(input string) int {
+	data := parse(input)
+	combinationCounts := map[int]int{0: 1}
 
-	return answer
+	sort.Slice(data, func(a int, b int) bool {
+		return data[a] < data[b]
+	})
+
+	for _, adapterJoltage := range data {
+		for joltageDifference := 1; joltageDifference <= 3; joltageDifference++ {
+			if val, ok := combinationCounts[(adapterJoltage - joltageDifference)]; ok {
+				combinationCounts[adapterJoltage] += val
+			}
+		}
+	}
+
+	return combinationCounts[data[(len(data)-1)]]
 }
