@@ -133,8 +133,8 @@ func TestAdvancedCasePartOne(t *testing.T) {
 	}
 }
 
-func _TestBaseCasePartTwo(t *testing.T) {
-	expectedSolution := 8
+func TestBaseCasePartTwo(t *testing.T) {
+	expectedSolution := 26
 	foundSolution := getAnswerCountPartTwo(basicInput)
 
 	if foundSolution != expectedSolution {
@@ -142,8 +142,8 @@ func _TestBaseCasePartTwo(t *testing.T) {
 	}
 }
 
-func _TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 173625106649344
+func TestAdvancedCasePartTwo(t *testing.T) {
+	expectedSolution := 2208
 	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {

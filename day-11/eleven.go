@@ -45,14 +45,37 @@ func countOccupied(layout [][]string) int {
 	return occupiedCount
 }
 
-func updateSeating(layout [][]string) [][]string {
+func isOccupied(layout [][]string, y int, x int, yModifier int, xModifier int, iterationsLeft int) bool {
+	xMod := x + xModifier
+	yMod := y + yModifier
+	validY := yMod >= 0 && yMod < len(layout)
+	validX := validY && xMod >= 0 && xMod < len(layout[y])
+
+	if validX && validY && layout[yMod][xMod] != empty {
+		if layout[yMod][xMod] == occupied {
+			return true
+		}
+
+		iterationsLeft--
+
+		if iterationsLeft > 0 {
+			return isOccupied(layout, yMod, xMod, yModifier, xModifier, iterationsLeft)
+		}
+
+		return false
+	}
+
+	return false
+}
+
+func updateSeating(layout [][]string, checkDepth int, maxOccupied int) [][]string {
 	updatedSeating := make([][]string, len(layout))
 	for i := range layout {
 		updatedSeating[i] = make([]string, len(layout[i]))
 		copy(updatedSeating[i], layout[i])
 	}
 
-	neighborModifiers := [][]int{
+	modifiers := [][]int{
 		[]int{-1, -1},
 		[]int{-1, 0},
 		[]int{-1, 1},
@@ -67,20 +90,15 @@ func updateSeating(layout [][]string) [][]string {
 		for x := 0; x < len(layout[y]); x++ {
 			occupiedCount := 0
 
-			for _, mod := range neighborModifiers {
-				xMod := x + mod[1]
-				yMod := y + mod[0]
-				validY := yMod >= 0 && yMod < len(layout)
-				validX := validY && xMod >= 0 && xMod < len(layout[y])
-
-				if validX && validY && layout[yMod][xMod] == occupied {
+			for _, mod := range modifiers {
+				if isOccupied(layout, y, x, mod[0], mod[1], checkDepth) {
 					occupiedCount++
 				}
 			}
 
 			if layout[y][x] == empty && occupiedCount == 0 {
 				updatedSeating[y][x] = occupied
-			} else if layout[y][x] == occupied && occupiedCount >= 4 {
+			} else if layout[y][x] == occupied && occupiedCount >= maxOccupied {
 				updatedSeating[y][x] = empty
 			}
 		}
@@ -95,7 +113,7 @@ func getAnswerCountPartOne(input string) int {
 	occupiedCount := 0
 
 	for {
-		layout = updateSeating(layout)
+		layout = updateSeating(layout, 1, 4)
 		newCount := countOccupied(layout)
 		if newCount == occupiedCount {
 			break
@@ -107,5 +125,17 @@ func getAnswerCountPartOne(input string) int {
 }
 
 func getAnswerCountPartTwo(input string) int {
-	return 0
+	layout := parse(input)
+	occupiedCount := 0
+
+	for {
+		layout = updateSeating(layout, len(layout), 5)
+		newCount := countOccupied(layout)
+		if newCount == occupiedCount {
+			break
+		}
+		occupiedCount = newCount
+	}
+
+	return occupiedCount
 }
