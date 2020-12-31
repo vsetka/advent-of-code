@@ -29,7 +29,7 @@ func TestAdvancedCasePartOne(t *testing.T) {
 }
 
 func TestBaseCasePartTwo(t *testing.T) {
-	expectedSolution := 0
+	expectedSolution := 1068781
 	foundSolution := getAnswerCountPartTwo(basicInput)
 
 	if foundSolution != expectedSolution {
@@ -38,7 +38,7 @@ func TestBaseCasePartTwo(t *testing.T) {
 }
 
 func TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 0
+	expectedSolution := 402251700208309
 	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {

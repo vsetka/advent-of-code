@@ -14,6 +14,8 @@ func parse(input string) (int, []int) {
 		if slot != "x" {
 			bus, _ := strconv.Atoi(slot)
 			buses = append(buses, bus)
+		} else {
+			buses = append(buses, 0)
 		}
 	}
 
@@ -25,9 +27,13 @@ func getAnswerCountPartOne(input string) int {
 	min := timestamp
 	busID := 0
 
-	// fmt.Printf("\nTimestamp: %d, Buses: %v\n\n", timestamp, buses)
 	for _, bus := range buses {
+		if bus <= 0 {
+			continue
+		}
+
 		diff := ((timestamp/bus)*bus + bus) - timestamp
+
 		if diff < min {
 			min = diff
 			busID = bus
@@ -38,13 +44,26 @@ func getAnswerCountPartOne(input string) int {
 }
 
 func getAnswerCountPartTwo(input string) int {
-	return 1
-}
+	_, buses := parse(input)
+	timestamp := 1
+	step := 1
 
-func GetAnswerCountPartOne(input string) int {
-	return getAnswerCountPartOne(input)
-}
+	for idx, bus := range buses {
+		if bus <= 0 {
+			continue
+		}
 
-func GetAnswerCountPartTwo(input string) int {
-	return getAnswerCountPartTwo(input)
+		// advance until we find a timestamp which gets divided
+		// by the current bus without remainder
+		for ((timestamp + idx) % bus) != 0 {
+			timestamp += step
+		}
+
+		// multiply the step by the bus as we from now on
+		// only want to increase the timestamp in lock-step for
+		// all buses that have been found so far (zero remainder division)
+		step *= bus
+	}
+
+	return timestamp
 }
