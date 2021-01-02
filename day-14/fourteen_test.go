@@ -4,10 +4,15 @@ import (
 	"testing"
 )
 
-var basicInput = `mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
+var basicInputPartOne = `mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
 mem[8] = 11
 mem[7] = 101
 mem[8] = 0`
+
+var basicInputPartTwo = `mask = 000000000000000000000000000000X1001X
+mem[42] = 100
+mask = 00000000000000000000000000000000X0XX
+mem[26] = 1`
 
 var advancedInput = `mask = 01111X0011X11110XX11X110111001X00001
 mem[26252] = 2785
@@ -584,7 +589,7 @@ mem[3306] = 51496`
 
 func TestBaseCasePartOne(t *testing.T) {
 	expectedSolution := int64(165)
-	foundSolution := getAnswerCountPartOne(basicInput)
+	foundSolution := getAnswerCountPartOne(basicInputPartOne)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -601,8 +606,8 @@ func TestAdvancedCasePartOne(t *testing.T) {
 }
 
 func TestBaseCasePartTwo(t *testing.T) {
-	expectedSolution := 1
-	foundSolution := getAnswerCountPartTwo(basicInput)
+	expectedSolution := int64(208)
+	foundSolution := getAnswerCountPartTwo(basicInputPartTwo)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -610,7 +615,7 @@ func TestBaseCasePartTwo(t *testing.T) {
 }
 
 func TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 1
+	expectedSolution := int64(3278997609887)
 	foundSolution := getAnswerCountPartTwo(advancedInput)
 
 	if foundSolution != expectedSolution {
