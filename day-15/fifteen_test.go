@@ -14,21 +14,21 @@ var basicInputs = []string{
 	`3,1,2`,
 }
 
-var basicOutputs = []int{
-	436,
-	1,
-	10,
-	27,
-	78,
-	438,
-	1836,
-}
-
 var advancedInput = `2,0,1,7,4,14,18`
 
 func TestBaseCasePartOne(t *testing.T) {
+	var basicOutputs = []int{
+		436,
+		1,
+		10,
+		27,
+		78,
+		438,
+		1836,
+	}
+
 	for idx := range basicInputs {
-		foundSolution := getAnswerCountPartOne(basicInputs[idx])
+		foundSolution := getAnswerCount(basicInputs[idx], 2020)
 
 		if foundSolution != basicOutputs[idx] {
 			t.Fatalf("Expected to get %d but got %d\n", basicOutputs[idx], foundSolution)
@@ -38,7 +38,7 @@ func TestBaseCasePartOne(t *testing.T) {
 
 func TestAdvancedCasePartOne(t *testing.T) {
 	expectedSolution := 496
-	foundSolution := getAnswerCountPartOne(advancedInput)
+	foundSolution := getAnswerCount(advancedInput, 2020)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)
@@ -46,8 +46,18 @@ func TestAdvancedCasePartOne(t *testing.T) {
 }
 
 func TestBaseCasePartTwo(t *testing.T) {
+	var basicOutputs = []int{
+		175594,
+		2578,
+		3544142,
+		261214,
+		6895259,
+		18,
+		362,
+	}
+
 	for idx := range basicInputs {
-		foundSolution := getAnswerCountPartTwo(basicInputs[idx])
+		foundSolution := getAnswerCount(basicInputs[idx], 30000000)
 
 		if foundSolution != basicOutputs[idx] {
 			t.Fatalf("Expected to get %d but got %d\n", basicOutputs[idx], foundSolution)
@@ -56,8 +66,8 @@ func TestBaseCasePartTwo(t *testing.T) {
 }
 
 func TestAdvancedCasePartTwo(t *testing.T) {
-	expectedSolution := 1
-	foundSolution := getAnswerCountPartTwo(advancedInput)
+	expectedSolution := 883
+	foundSolution := getAnswerCount(advancedInput, 30000000)
 
 	if foundSolution != expectedSolution {
 		t.Fatalf("Expected to get %d but got %d\n", expectedSolution, foundSolution)

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func getAnswerCountPartOne(input string) int {
+func getAnswerCount(input string, n int) int {
 	inputNumbers := strings.Split(input, ",")
 	turn := 0
 	spokenNumberRounds := map[int][]int{}
@@ -33,20 +33,8 @@ func getAnswerCountPartOne(input string) int {
 			spokenNumbers = append(spokenNumbers, number)
 			spokenNumberRounds[number] = append(spokenNumberRounds[number], turn)
 		}
-		if len(spokenNumbers) == 2020 {
-			return spokenNumbers[2019]
+		if len(spokenNumbers) == n {
+			return spokenNumbers[n-1]
 		}
 	}
-}
-
-func getAnswerCountPartTwo(input string) int {
-	return 0
-}
-
-func GetAnswerCountPartOne(input string) int {
-	return getAnswerCountPartOne(input)
-}
-
-func GetAnswerCountPartTwo(input string) int {
-	return getAnswerCountPartTwo(input)
 }
